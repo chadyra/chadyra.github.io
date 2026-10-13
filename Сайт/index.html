@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Рыцари и Доспехи — сталь, золото и кодекс чести</title>
+  <meta name="description" content="Интерактивный сайт о рыцарях и их доспехах: Англия, Германия, Италия XIV–XV веков. 3D-модели, история латного доспеха.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%94%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=MedievalSharp&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ═══ ПРЕЛОАДЕР: тьма, туман, выход рыцаря ═══ -->
+  <div id="preloader" aria-hidden="true">
+    <div class="fog fog-1"></div>
+    <div class="fog fog-2"></div>
+    <div class="fog fog-3"></div>
+    <div class="pre-inner">
+      <div class="pre-emblem">&#9876;</div>
+      <div class="pre-title">Рыцари и Доспехи</div>
+      <div class="pre-sub">Из тьмы веков выходит сталь…</div>
+      <div class="pre-bar"><span></span></div>
+    </div>
+  </div>
+
+  <div id="flash" aria-hidden="true"></div>
+
+  <!-- ═══ ШАПКА ═══ -->
+  <header class="site-header">
+    <a class="logo" href="#hero"><span class="logo-mark">&#9876;</span>Рыцари и Доспехи</a>
+    <nav>
+      <a href="#gallery">Галерея</a>
+      <a href="#history">История</a>
+    </nav>
+  </header>
+
+  <!-- ═══ HERO: рыцарь Англии в 3D ═══ -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-veil" aria-hidden="true"></div>
+    <div class="hero-overlay">
+      <p class="hero-kicker">Anno Domini &middot; XIV&ndash;XV</p>
+      <h1>Рыцари<span class="gold">и их доспехи</span></h1>
+      <p class="hero-sub">Сталь, золото и кодекс чести — путь от кольчуги к белому латному доспеху.</p>
+    </div>
+    <div class="hero-hint" id="hero-hint">Вращайте рыцаря мышью &middot; колесо — приближение</div>
+    <div class="scroll-cue" aria-hidden="true"></div>
+  </section>
+
+  <!-- ═══ ГАЛЕРЕЯ ═══ -->
+  <section id="gallery">
+    <div class="section-head">
+      <h2>Галерея воинов</h2>
+      <p>Три школы, три доспеха, три судьбы. Кликните по карточке — рыцарь выйдет из тьмы на весь экран.</p>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <!-- ═══ ИСТОРИЯ ═══ -->
+  <section id="history">
+    <div class="section-head">
+      <h2>Краткая история доспеха</h2>
+      <p>От кольчужной сетки к зеркальной стали — четыреста лет гонки защиты.</p>
+    </div>
+    <div class="history-body">
+      <article class="history-block">
+        <h3>I. Век кольчуги &middot; XII&ndash;XIV вв.</h3>
+        <p>До XIV века тело воина защищала кольчуга — рубаха из десятков тысяч склёпанных стальных колец.
+        Она держала скользящий удар клинка, но бессильно встречала булаву и всё чаще пробивалась
+        арбалетным болтом и английским длинным луком. Ответом стали усиливающие пластины: сначала
+        бацинет с опускающимся забралом, затем наручи, поножи и нагрудник поверх кольчужной основы.</p>
+      </article>
+      <article class="history-block">
+        <h3>II. Золотой век лат &middot; XV век</h3>
+        <p>К середине XV века кольчуга окончательно скрылась под полным латным доспехом. Милан ковал
+        гладкие округлые панцири, Аугсбург и Нюрнберг — ребристые «готические», где каждая складка
+        стали отводила клинок от тела. Боевой комплект весил 20–25 кг, распределённых по всему телу:
+        в нём бегали, вставали с земли и садились на коня без стремян.</p>
+      </article>
+      <article class="history-block">
+        <h3>III. Закат доспеха &middot; XVI&ndash;XVII вв.</h3>
+        <p>Пуля не уважала ни готические рёбра, ни миланскую полировку: пластины толстели, доспех
+        тяжелел и сокращался до кирасы с шлемом, а затем уступил место мундиру. Латы остались там,
+        где пуля не летела, — на турнирах и парадах: чёрный доспех Генриха VIII весом 42 кг —
+        вершина именно этой парадной моды.</p>
+      </article>
+      <aside class="history-fact">
+        <h4>Миф о кране</h4>
+        <p>Будто рыцарей сажали на коней подъёмными кранами. Неправда: вес боевого доспеха распределён
+        по телу, и тренированный воин в полной лате запрыгивал в седло без стремян. Кран понадобился
+        разве что летописцам — для красоты легенды.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ═══ ПОДВАЛ ═══ -->
+  <footer class="site-footer">
+    <div class="footer-emblem">&#9876;</div>
+    <p>Рыцари и Доспехи — просветительский проект о воинском искусстве Средневековья.</p>
+    <p class="footer-copy">&copy; 2026 &middot; Бей честно, уклоняйся чисто</p>
+  </footer>
+
+  <!-- ═══ МОДАЛЬНЫЙ 3D-ПРОСМОТР ═══ -->
+  <div id="modal-overlay" aria-hidden="true"></div>
+  <div id="modal" role="dialog" aria-modal="true" aria-label="3D-просмотр доспеха">
+    <div class="modal-stage">
+      <canvas id="modal-canvas"></canvas>
+      <div class="modal-loader" id="modal-loader">
+        <div class="spinner"></div>
+        <p id="modal-loader-text">Куем изображение…</p>
+      </div>
+    </div>
+    <aside class="modal-panel">
+      <div class="panel-head">
+        <h3 id="modal-name">&mdash;</h3>
+        <p id="modal-era">&mdash;</p>
+      </div>
+      <div class="panel-body">
+        <nav class="tabs" id="tabs" aria-label="Разделы описания"></nav>
+        <div class="tab-text" id="tab-text"></div>
+      </div>
+    </aside>
+    <button id="modal-close" aria-label="Закрыть просмотр">&#10005;</button>
+  </div>
+
+  <!-- Плёночное зерно и виньетка поверх всего -->
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <noscript><p style="color:#c9a961;text-align:center;padding:20px">Для 3D-просмотра включите JavaScript.</p></noscript>
+
+  <!-- Сторож: если CDN Three.js недоступен — не оставляем пользователя на прелоадере -->
+  <script>
+    window.__knightBoot = false;
+    setTimeout(function () {
+      if (!window.__knightBoot) {
+        var p = document.getElementById('preloader');
+        if (p) p.classList.add('done');
+        var o = document.querySelector('.hero-overlay');
+        if (o) o.classList.add('visible');
+        var h = document.getElementById('hero-hint');
+        if (h) { h.textContent = 'Не удалось загрузить 3D-движок — проверьте доступ к cdn.jsdelivr.net'; h.classList.add('visible'); }
+      }
+    }, 12000);
+  </script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
